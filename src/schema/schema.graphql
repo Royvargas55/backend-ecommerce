@@ -1,0 +1,79 @@
+"Definiciones de los tipos de raíz"
+type Query {
+    "Lista de usuarios registrados (clientes/admins)"
+    users: ResultUsers
+    "Iniciar sesión"
+    login(email: String!, password: String!): ResultLogin
+    "Autenticación mediante token"
+    me: ResultUser
+}
+
+type Mutation {
+    register(user: userInput!): ResultUser
+}
+
+"Interface para especificar las propiedades obligatorias en la respuesta"
+interface Result {
+    "Estado y mensaje de la operación"
+    status: Boolean!
+    message: String!
+}
+
+type ResultUsers implements Result {
+    "Estado y mensaje de la operación"
+    status: Boolean!
+    message: String!
+    "Lista de usuarios registrados (clientes/admins)"
+    users: [User!]!
+}
+
+type ResultUser implements Result {
+    "Estado y mensaje de la operación"
+    status: Boolean!
+    message: String!
+    "información del usuario"
+    user: User
+}
+
+type ResultLogin implements Result {
+    "Estado y mensaje de la operación"
+    status: Boolean!
+    message: String!
+    "Información del token del usuario logueado"
+    token: String
+}
+
+
+"""
+Información del usuario
+Fecha nacimiento y registro en formato ISO
+"""
+type User {
+    id: ID!
+    name: String!
+    lastName: String!
+    email: String!
+    password: String!
+    registerDate: String!
+    birthDay: String!
+    "Permisos del usuario"
+    role: Role!
+}
+
+"Input para añadir datos de un usuario"
+input userInput {
+    id: ID
+    name: String!
+    lastName: String!
+    email: String!
+    password: String!
+    "Obligatorio para verificar que es mayor de edad"
+    birthDay: String!
+    "Permisos del usuario"
+    role: Role=CLIENT
+}
+
+enum Role{
+    CLIENT
+    ADMIN
+}
