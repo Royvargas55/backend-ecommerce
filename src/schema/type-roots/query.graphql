@@ -1,0 +1,11 @@
+"Definiciones de los tipos de raíz"
+type Query {
+    "Lista de usuarios registrados (clientes/admins)"
+    users: ResultUsers
+    "Iniciar sesión"
+    login(email: String!, password: String!): ResultLogin
+    "Autenticación mediante token"
+    me: ResultUser
+    "Mostrar lista de productos"
+    products: Boolean
+}

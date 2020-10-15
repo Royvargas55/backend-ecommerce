@@ -1,0 +1,15 @@
+"""
+Información del usuario
+Fecha nacimiento y registro en formato ISO
+"""
+type User {
+    id: ID!
+    name: String!
+    lastName: String!
+    email: String!
+    password: String!
+    registerDate: String!
+    birthDay: String!
+    "Permisos del usuario"
+    role: Role!
+}

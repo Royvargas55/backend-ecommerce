@@ -1,10 +1,15 @@
 import 'graphql-import-node';
-import typeDefs from './schema.graphql';
 import resolvers from './../resolvers';
-import { makeExecutableSchema } from 'graphql-tools';
+import { makeExecutableSchema } from '@graphql-tools/schema';
 import { GraphQLSchema } from 'graphql';
 
+import path from 'path';
+import { loadFilesSync } from '@graphql-tools/load-files';
+const { mergeTypeDefs } = require('@graphql-tools/merge');
 
+
+const typesArray = loadFilesSync(path.join(`${__dirname}/**/*.graphql`));
+const typeDefs = mergeTypeDefs(typesArray, { all: true});
 
 const schema: GraphQLSchema = makeExecutableSchema({
     typeDefs,
@@ -15,3 +20,6 @@ const schema: GraphQLSchema = makeExecutableSchema({
 });
 
 export default schema;
+
+
+

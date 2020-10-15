@@ -1,0 +1,12 @@
+"Input para añadir datos de un usuario"
+input userInput {
+    id: ID
+    name: String!
+    lastName: String!
+    email: String!
+    password: String!
+    "Obligatorio para verificar que es mayor de edad"
+    birthDay: String!
+    "Permisos del usuario"
+    role: Role=CLIENT
+}
