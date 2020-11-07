@@ -3,6 +3,7 @@ import { IResolvers } from 'graphql-tools';
 import JWT from './../../lib/jwt';
 import bycrypt from 'bcrypt';
 import { findElements, findOneElement } from './../../lib/db-operations';
+import UsersService from '../../services/users.service';
 
 /*
   id: ID!
@@ -15,78 +16,15 @@ import { findElements, findOneElement } from './../../lib/db-operations';
 */
 const resolversUserQuery: IResolvers = {
   Query: {
-    async users(_, __, { db }) {
-      try {
-        return {
-          status: true,
-          message: 'User list loaded successfully',
-          users: await findElements(db, COLLECTIONS.USERS),
-        };
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message: 'Could not load user list',
-          users: [],
-        };
-      }
+    async users(_, __, context) {
+      return new UsersService(_,__, context).items();
     },
 
-    async login(_, { email, password }, { db }) {
-      try {
-        // const user = await db.collection(COLLECTIONS.USERS).findOne({ email });
-        const user = await findOneElement(db, COLLECTIONS.USERS, { email });
-
-        if (user === null) {
-          return {
-            status: false,
-            message: 'user not found',
-            token: null,
-          };
-        }
-
-        const passwordCheck = bycrypt.compareSync(password, user.password);
-        
-        if( passwordCheck !== null ){
-            delete user.password;
-            delete user.registerDate;
-            delete user.birthDay;
-        }
-        return {
-          status: true,
-          message:
-            !passwordCheck
-              ? 'Wrong email or password'
-              : 'User successfully logged in',
-          token: 
-            !passwordCheck
-            ? null
-            : new JWT().sign({ user}, EXPIRETIME.H24) 
-        };
-      } catch (error) {
-        console.log(error);
-        return {
-          status: false,
-          message: 'There was a mistake',
-          token: null,
-        };
-      }
+    async login(_, { email, password }, context) {
+      return new UsersService(_,{user: {email, password}}, context).login();
     },
     me(_, __, { token }) {
-        console.log(token);
-        let info = new JWT().verify(token);
-        if( info === MESSAGES.TOKEN_VERIFICATION_FAILED ) {
-            return {
-                status: false,
-                message: info,
-                user: null
-            };
-        }
-        return{
-            status: true,
-            message: 'Successfully authenticated user with token',
-            user: Object.values(info)[0]
-        };
+      return new UsersService(_,__,{ token }).auth();
     }
   },
 };

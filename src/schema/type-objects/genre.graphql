@@ -1,0 +1,6 @@
+"Almecenar la informacion de los generos"
+type Genre implements Item {
+    id: ID!
+    name: String!
+    slug: String! 
+}

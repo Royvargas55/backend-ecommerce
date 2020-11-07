@@ -1,0 +1,6 @@
+"Item basico para propiedades basicas de los elementos"
+interface Item {
+    id: ID!
+    name: String!
+    slug: String!
+}

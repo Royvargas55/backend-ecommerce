@@ -1,3 +1,7 @@
 type Mutation {
     register(user: userInput!): ResultUser
+    updateUser(user: userInput!): ResultUser
+    addGenre(genre: String!): ResultGenre
+    updateGenre(id: ID!, genre: String!): ResultGenre
+    deleteGenre(id: ID!): ResultGenre
 }

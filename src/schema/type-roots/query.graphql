@@ -6,6 +6,9 @@ type Query {
     login(email: String!, password: String!): ResultLogin
     "Autenticación mediante token"
     me: ResultUser
-    "Mostrar lista de productos"
-    products: Boolean
+    "Mostrar lista de generos"
+    genres: ResultGenre
+    "Mostrar detalles de un genero"
+    genre(id: ID!): ResultGenre
 }
+
