@@ -3,7 +3,7 @@ Información del usuario
 Fecha nacimiento y registro en formato ISO
 """
 type User {
-    id: ID!
+    id: Int!
     name: String!
     lastName: String!
     email: String!

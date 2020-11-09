@@ -4,6 +4,7 @@ import { assignDocumentId, findOneElement } from '../lib/db-operations';
 import bycrypt from 'bcrypt';
 import ResolversOperationsService from './resolvers-operations.service';
 import JWT from '../lib/jwt';
+import { IUser } from '../interfaces/user.interface';
 
 class UsersService extends ResolversOperationsService {
     private collection = COLLECTIONS.USERS;
@@ -126,6 +127,26 @@ class UsersService extends ResolversOperationsService {
         };
       }
 
+    // Modificar un usuario
+    // async modify() {
+    //   const user = this.getVariables().user;
+    //   // comprobar que user no es null
+    //   if (user === null) {
+    //     return {
+    //       status: false,
+    //       message: 'Usuario no definido, procura definirlo',
+    //       user: null
+    //     };
+    //   }
+    //   const filter = {id: user?.id };
+    //   const result = await this.update(this.collection, filter, user || {}, 'usuario');
+    //   return {
+    //     status: result.status,
+    //     message: result.message,
+    //     user: result.item
+    //   };
+    // }
+
       // Modificar un usuario
       async modify() {
         const user = this.getVariables().user;
@@ -133,14 +154,17 @@ class UsersService extends ResolversOperationsService {
         if (user === null) {
             return {
             status: false,
-            message: 'Usuario no definido, procura definirlo',
+            message: 'Undefined user',
             user: null
             };
         }
         const idNumber = user?.id as number;
+        // const id = parseInt(idNumber.toString());
         const filter = {id: parseInt(idNumber.toString()) };
         console.log(filter.id);
         console.log(typeof filter.id);
+        console.log(user);
+        
         const result = await this.update(this.collection, filter, user || {}, 'user');
         return {
           status: result.status,

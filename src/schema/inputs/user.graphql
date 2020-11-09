@@ -1,6 +1,6 @@
 "Input para añadir datos de un usuario"
 input userInput {
-    id: ID
+    id: Int
     name: String!
     lastName: String!
     email: String!

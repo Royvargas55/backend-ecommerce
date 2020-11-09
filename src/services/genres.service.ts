@@ -17,7 +17,9 @@ class GenresService extends ResolversOperationsService {
     }
 
     async details() {
-        const result = await this.get(this.collection);
+        const idNumber = this.getVariables().id as number;
+        const id = { id: parseInt(idNumber.toString())};
+        const result = await this.get(this.collection, id);
         return { status: result.status, message: result.message, genre: result.item};
     }
 
@@ -51,11 +53,10 @@ class GenresService extends ResolversOperationsService {
     }
 
     async modify() {
+        const genre = this.getVariables().genre;
         const idNumber = this.getVariables().id as number;
         const id = { id: parseInt(idNumber.toString())};
         
-        const genre = this.getVariables().genre;
-
         if (!this.checkData(String(id) || '')) {
             return {
                 status: false,
