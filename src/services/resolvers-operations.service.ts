@@ -8,6 +8,7 @@ import {
   deleteOneElement,
 } from './../lib/db-operations';
 import { IVariables } from '../interfaces/variable.interface';
+import { pagination } from '../lib/pagination';
 
 class ResolversOperationsService {
   private root: object;
@@ -27,15 +28,23 @@ class ResolversOperationsService {
   }
   protected getContext(): IContextData { return this.context; }
   //List data
-  protected async list(collection: string, listElements: string) {
+  protected async list(collection: string, listElements: string, page: number = 1, itemsPage: number = 20 ) {
     try {
+      const paginationData = await pagination(this.getDb(), collection, page, itemsPage);     
       return {
+        info: { 
+          page: paginationData.page,
+          pages: paginationData.pages,
+          itemsPage: paginationData.itemsPage,
+          total: paginationData.total
+        },
         status: true,
         message: `List of ${listElements} loaded`,
-        items: await findElements(this.getDb(), collection),
+        items: await findElements(this.getDb(), collection, {}, paginationData)
       };
     } catch (error) {
       return {
+        info: null,
         status: false,
         message: `List of ${listElements} doesnt loaded: ${error}`,
         items: null,

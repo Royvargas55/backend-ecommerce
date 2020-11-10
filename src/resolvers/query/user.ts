@@ -16,8 +16,10 @@ import UsersService from '../../services/users.service';
 */
 const resolversUserQuery: IResolvers = {
   Query: {
-    async users(_, __, context) {
-      return new UsersService(_,__, context).items();
+    async users(_, {page, itemsPage}, context) {
+      return new UsersService(_, {
+        pagination: {page, itemsPage}
+    }, context).items();
     },
 
     async login(_, { email, password }, context) {
