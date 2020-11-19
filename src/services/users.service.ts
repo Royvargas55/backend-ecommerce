@@ -165,6 +165,32 @@ class UsersService extends ResolversOperationsService {
         message: result.message
       };
     }
+
+    //Bloquear usuario
+    async block() {
+        const id = this.getVariables().id; 
+        //const id = { id: parseInt(idNumber.toString())};
+        
+        if (!this.checkData(String(id) || '')) {
+            return {
+                status: false,
+                message: 'ID user not specified',
+                genre: null
+            };
+        }
+
+        const result = await this.update(this.collection, { id }, { active: false }, 'user');
+        return { 
+            status: result.status, 
+            message: result.message ? 'Has been successfully blocked' : 'It has not been blocked, check it'
+        };
+    }
+
+    // check data
+    private checkData(value: string) {
+      return (value === '' || value === undefined) ? false : true;
+  }
+    
 }
 
 export default UsersService;
