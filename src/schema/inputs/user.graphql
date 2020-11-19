@@ -9,4 +9,6 @@ input userInput {
     birthDay: String!
     "Permisos del usuario"
     role: Role=CLIENT
+    "Activo o no"
+    active: Boolean
 }

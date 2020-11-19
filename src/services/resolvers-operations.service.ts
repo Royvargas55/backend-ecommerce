@@ -1,14 +1,14 @@
-import { IContextData } from './../interfaces/context-data.interface';
-import { Db } from 'mongodb';
+import { IContextData } from "./../interfaces/context-data.interface";
+import { Db } from "mongodb";
 import {
   findOneElement,
   insertOneElement,
   findElements,
   updateOneElement,
   deleteOneElement,
-} from './../lib/db-operations';
-import { IVariables } from '../interfaces/variable.interface';
-import { pagination } from '../lib/pagination';
+} from "./../lib/db-operations";
+import { IVariables } from "../interfaces/variable.interface";
+import { pagination } from "../lib/pagination";
 
 class ResolversOperationsService {
   private root: object;
@@ -26,21 +26,35 @@ class ResolversOperationsService {
   protected getVariables(): IVariables {
     return this.variables;
   }
-  protected getContext(): IContextData { return this.context; }
+  protected getContext(): IContextData {
+    return this.context;
+  }
   //List data
-  protected async list(collection: string, listElements: string, page: number = 1, itemsPage: number = 20 ) {
+  protected async list(
+    collection: string,
+    listElements: string,
+    page: number = 1,
+    itemsPage: number = 20,
+    filter: object = { active: { $ne: false}}
+  ) {
     try {
-      const paginationData = await pagination(this.getDb(), collection, page, itemsPage);     
+      const paginationData = await pagination(
+        this.getDb(),
+        collection,
+        page,
+        itemsPage,
+        filter
+      );
       return {
-        info: { 
+        info: {
           page: paginationData.page,
           pages: paginationData.pages,
           itemsPage: paginationData.itemsPage,
-          total: paginationData.total
+          total: paginationData.total,
         },
         status: true,
         message: `List of ${listElements} loaded`,
-        items: await findElements(this.getDb(), collection, {}, paginationData)
+        items: await findElements(this.getDb(), collection, filter, paginationData),
       };
     } catch (error) {
       return {
@@ -60,20 +74,22 @@ class ResolversOperationsService {
     // status: false
     const collectionLabel = collection.toLowerCase();
     try {
-      return await findOneElement(this.getDb(), collection, id).then((result) => {
-        if (result) {
+      return await findOneElement(this.getDb(), collection, id).then(
+        (result) => {
+          if (result) {
+            return {
+              status: true,
+              message: `${collectionLabel} collection loaded successfully`,
+              item: result,
+            };
+          }
           return {
             status: true,
-            message: `${collectionLabel} collection loaded successfully`,
-            item: result,
+            message: `${collectionLabel} collection has no information`,
+            item: null,
           };
         }
-        return {
-          status: true,
-          message: `${collectionLabel} collection has no information`,
-          item: null,
-        };
-      });
+      );
     } catch (error) {
       return {
         status: false,

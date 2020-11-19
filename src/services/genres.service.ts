@@ -101,6 +101,25 @@ class GenresService extends ResolversOperationsService {
         return { status: result.status, message: result.message };
     }
 
+    async block() {
+        const idNumber = this.getVariables().id as number;
+        const id = { id: parseInt(idNumber.toString())};
+        
+        if (!this.checkData(String(id) || '')) {
+            return {
+                status: false,
+                message: 'ID genre not specified',
+                genre: null
+            };
+        }
+
+        const result = await this.update(this.collection, id, {active: false}, 'genre');
+        return { 
+            status: result.status, 
+            message: result.message ? 'Has been successfully blocked' : 'It has not been blocked, check it'
+        };
+    }
+
     private checkData(value: string) {
         return (value === '' || value === undefined) ? false : true;
     }
