@@ -23,7 +23,7 @@ class GenresService extends ResolversOperationsService {
     async details() {
         const idNumber = this.getVariables().id as number;
         const id = { id: parseInt(idNumber.toString())};
-        const result = await this.get(this.collection, id);
+        const result = await this.get(this.collection);
         return { status: result.status, message: result.message, genre: result.item};
     }
 

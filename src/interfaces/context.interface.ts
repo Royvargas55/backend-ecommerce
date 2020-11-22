@@ -1,5 +1,3 @@
-
-
 export interface IContext{
     req: IRequest;
     connection: IConnection;

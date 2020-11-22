@@ -66,7 +66,7 @@ class ResolversOperationsService {
     }
   }
   // Get details
-  protected async get(collection: string, id: {}) {
+  protected async get(collection: string) {
     // Response ok
     // Find data
     // No data found
@@ -74,7 +74,9 @@ class ResolversOperationsService {
     // status: false
     const collectionLabel = collection.toLowerCase();
     try {
-      return await findOneElement(this.getDb(), collection, id).then(
+      return await findOneElement(this.getDb(), collection, {
+        id: this.variables.id,
+      }).then(
         (result) => {
           if (result) {
             return {

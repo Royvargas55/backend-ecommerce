@@ -1,5 +1,5 @@
 import { countElements } from './db-operations';
-import { Db } from "mongodb";
+import { Db } from 'mongodb';
 
 export async function pagination(
   db: Db,
