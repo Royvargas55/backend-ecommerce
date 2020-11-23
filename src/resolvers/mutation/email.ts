@@ -27,7 +27,7 @@ const resolversMailMutation: IResolvers = {
           message: verify.message
         };
       }
-      return new UsersService(_, { id, user: { birthDay, password } }, {token, db}).unblock(true);
+      return new UsersService(_, { id, user: { birthDay, password } }, {token, db}).unblock(true, false);
     },
     async resetPassword(_, { email }, { db }) {
       return new PasswordService(_, { user: {email} }, { db }).sendMail();

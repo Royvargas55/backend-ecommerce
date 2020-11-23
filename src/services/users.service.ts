@@ -1,4 +1,4 @@
-import { COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
+import { ACTIVE_VALUES_FILTER, COLLECTIONS, EXPIRETIME, MESSAGES } from '../config/constants';
 import { IContextData } from '../interfaces/context-data.interface';
 import { assignDocumentId, findOneElement } from '../lib/db-operations';
 import bycrypt from 'bcrypt';
@@ -13,10 +13,17 @@ class UsersService extends ResolversOperationsService {
     }
 
     //Lista de usuarios
-    async items(){
+    async items(active: string = ACTIVE_VALUES_FILTER.ACTIVE){
+        console.log('service', active);
+        let filter: object = {active: {$ne: false}};
+        if(active === ACTIVE_VALUES_FILTER.ALL) {
+          filter = {};
+        } else if (active === ACTIVE_VALUES_FILTER.INACTIVE) {
+          filter = {active:false};
+        }
         const page = this.getVariables().pagination?.page;
         const itemsPage = this.getVariables().pagination?.itemsPage;
-        const result = await this.list(this.collection, 'Users', page, itemsPage);
+        const result = await this.list(this.collection, 'Users', page, itemsPage, filter);
         return {info: result.info, status: result.status, message: result.message, users: result.items};
     }
     //Autenticarnos
@@ -168,7 +175,7 @@ class UsersService extends ResolversOperationsService {
     }
 
     //Bloquear usuario
-    async unblock(unblock: boolean) {
+    async unblock(unblock: boolean, admin: boolean) {
         const id = this.getVariables().id; 
         const user = this.getVariables().user;
         //const id = { id: parseInt(idNumber.toString())};
@@ -188,7 +195,7 @@ class UsersService extends ResolversOperationsService {
           };
         }
         let update = {active: unblock};
-        if (unblock) {
+        if (unblock && !admin) {
           update = Object.assign({}, 
             {active: true}, 
             {birthDay: user?.birthDay, 

@@ -16,9 +16,9 @@ const resolversUsersMutation: IResolvers = {
             console.log({ id });
             return new UsersService(_, { id }, context).delete();
         },
-        blockUser(_, { id }, context){  
+        blockUser(_, { id, unblock, admin }, context){  
             console.log({ id });
-            return new UsersService(_, { id }, context).unblock(false);
+            return new UsersService(_, { id }, context).unblock(unblock, admin);
         }
     },   
 };

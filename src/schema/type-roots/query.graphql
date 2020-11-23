@@ -1,7 +1,7 @@
 "Definiciones de los tipos de raíz"
 type Query {
     "Lista de usuarios registrados (clientes/admins)"
-    users (page: Int = 1, itemsPage: Int = 20): ResultUsers
+    users (page: Int = 1, itemsPage: Int = 20, active: ActiveFilterEnum = ACTIVE): ResultUsers
     "Iniciar sesión"
     login(email: String!, password: String!): ResultLogin
     "Autenticación mediante token"

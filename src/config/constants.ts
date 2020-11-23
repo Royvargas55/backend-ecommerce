@@ -28,3 +28,9 @@ export enum EXPIRETIME {
     M20 = H1 / 3,
     D3 = H24 * 3
 }
+
+export enum ACTIVE_VALUES_FILTER {
+    ALL = 'ALL',
+    ACTIVE = 'ACTIVE',
+    INACTIVE = 'INACTIVE'
+}
