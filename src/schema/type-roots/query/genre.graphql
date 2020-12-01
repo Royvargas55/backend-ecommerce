@@ -1,0 +1,6 @@
+type Query {
+     "Mostrar lista de generos"
+    genres (page: Int = 1, itemsPage: Int = 20): ResultGenre
+    "Mostrar detalles de un genero"
+    genre(id: ID!): ResultGenre
+}

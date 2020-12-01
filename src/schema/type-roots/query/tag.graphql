@@ -1,0 +1,6 @@
+type Query {
+"Lista de etiquetas (tags)"
+    tags (page: Int = 1, itemsPage: Int = 20): ResultTag
+    "Item del género seleccionado"
+    tag(id: ID!): ResultTag
+}

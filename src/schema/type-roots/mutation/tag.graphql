@@ -1,0 +1,7 @@
+type Mutation {
+     "Apartado de operaciones donde trabajamos con los tags"
+    addTag(tag: String!): ResultTag
+    updateTag(id: ID!, tag: String!): ResultTag
+    deleteTag(id: ID!): ResultTag
+    blockTag(id: ID!): ResultTag
+}

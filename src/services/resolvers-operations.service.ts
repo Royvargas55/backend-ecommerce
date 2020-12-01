@@ -1,14 +1,14 @@
-import { IContextData } from "./../interfaces/context-data.interface";
-import { Db } from "mongodb";
+import { IContextData } from './../interfaces/context-data.interface';
+import { Db } from 'mongodb';
 import {
   findOneElement,
   insertOneElement,
   findElements,
   updateOneElement,
   deleteOneElement,
-} from "./../lib/db-operations";
-import { IVariables } from "../interfaces/variable.interface";
-import { pagination } from "../lib/pagination";
+} from './../lib/db-operations';
+import { IVariables } from '../interfaces/variable.interface';
+import { pagination } from '../lib/pagination';
 
 class ResolversOperationsService {
   private root: object;

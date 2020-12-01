@@ -1,0 +1,7 @@
+type Mutation {
+    "Apartado de operaciones donde trabajamos con los usuarios"
+    register(user: userInput!): ResultUser
+    updateUser(user: userInput!): ResultUser
+    deleteUser(id: Int!): ResultUser
+    blockUser(id: Int!, unblock: Boolean = false, admin: Boolean = false): ResultUser
+}

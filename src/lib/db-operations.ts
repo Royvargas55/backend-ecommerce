@@ -1,5 +1,5 @@
-import { IPaginationOptions } from "./../interfaces/pagination-options.interface";
-import { Db } from "mongodb";
+import { IPaginationOptions } from './../interfaces/pagination-options.interface';
+import { Db } from 'mongodb';
 /**
  * Obtener el ID que va a tener el nuevo usuario
  * @param database Base de datos donde se esta trabajando
@@ -97,4 +97,21 @@ export const countElements = async (
   filter: object = {}
 ) => {
   return await database.collection(collection).countDocuments(filter);
+};
+
+export const randomItems = async(
+  database: Db,
+  collection: string,
+  filter: object = {},
+  items: number = 10
+): Promise<Array<object>> => {
+  return new Promise(async(resolve) => {
+    const pipeline = [
+      { $match: filter },
+      { $sample: { size: items}}
+    ];
+    resolve(await database.collection(collection).aggregate(
+      pipeline
+    ).toArray());
+  });
 };

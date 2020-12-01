@@ -1,0 +1,6 @@
+type Platform {
+    id: Int!
+    name: String!
+    slug: String!
+    active: Boolean!
+}

@@ -1,0 +1,8 @@
+type Mutation {
+    "Envio de emails"
+    sendEmail(mail: MailInput!): ResultMail
+    activeUserEmail(id: Int!, email: String!): ResultMail
+    activeUserAction(id: Int!, birthDay: String!, password: String!): ResultMail
+    resetPassword(email: String!): ResultMail
+    changePassword(id: Int!, password: String!): ResultUser
+}

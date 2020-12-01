@@ -9,7 +9,10 @@ export const SECRET_KEY = process.env.SECRET || 'RoyVargasDelgadoProyectoWeb';
 export enum COLLECTIONS{
     USERS= 'users',
     GENRES= 'genres',
-    TAGS = 'tags'
+    TAGS = 'tags',
+    SHOP_PRODUCT = 'products_platforms',
+    PRODUCTS = 'products',
+    PLATFORMS = 'platforms'
 }
 
 export enum MESSAGES {
