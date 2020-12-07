@@ -41,7 +41,7 @@ const resolversShopProductsQuery: IResolvers = {
             pagination: { page, itemsPage },
           },
           context
-        ).items(active, 0, random, otherFilters);
+        ).items(active, [0], random, otherFilters);
     }
   },
 };
