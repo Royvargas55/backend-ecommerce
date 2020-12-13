@@ -9,7 +9,7 @@ class ProductService extends ResolversOperationsService {
     }
 
     async details() {
-        const result = await this.get(this.collection);
+        const result = await this.get(this.collection);        
         return { status: result.status, message: result.message, product: result.item };
     }
 }
